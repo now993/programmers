@@ -1,0 +1,38 @@
+def solution(genres, plays):
+    dic = {}
+    sumdic = {}
+    answer = []
+    for i in range(len(genres)):
+        dic[list(enumerate(plays))[i]] = genres[i] # 중복key가 들어갈 수 있도록 enumerate사용
+    for k, v in dic.items(): # dic의 value를 key로 받고 합을 구해 새로운 dictionary생성 (=sumdic)
+        if v in sumdic.keys():
+            sumdic[v] += k[1]
+        else:
+            sumdic[v] = k[1]
+    sumlist = sorted(sumdic.items(), key= lambda x : x[1], reverse = True) # 재생횟수에 따른 역순정렬
+    basiclist = sorted(dic.items(), key = lambda x : x[0][1], reverse = True) # 재생횟수에 따른 역순정렬
+    for i in sumlist:
+        count = 0
+        for j in basiclist:
+            if i[0] == j[1] and count <= 1: # 같은 장르 내 재생횟수 top2까지만 받기 위해 count설정
+                count += 1
+                if plays.index(j[0][1]) in answer: # 이미 해당 index가 answer에 들어있다면, 즉 중복값이 존재한다면 다음 index를 넣는다.
+                    answer.append(plays[plays.index(j[0][1])+1:].index(j[0][1])+plays.index(j[0][1])+1)  #슬라이스를 통해 중복되는 다음 인덱스를 받을 수 있도록 함.   
+                else:
+                    answer.append(plays.index(j[0][1])) 
+    # 테스트
+    print("dic: ",dic)
+    print()
+    print("sumdic: ",sumdic)
+    print()
+    print("basiclist: ",basiclist)
+    print()
+    print("sumlist: ",sumlist)
+    print()
+    print("last_count: ",count)
+    print()
+    return answer
+
+genres = ["classic", "pop", "classic", "classic", "pop", "classic"]
+plays = [500, 800, 2500, 700, 800, 2500]
+print("answer: ",solution(genres, plays))
