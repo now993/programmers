@@ -3,8 +3,8 @@ def solution(genres, plays):
     sumdic = {}
     answer = []
     for i in range(len(genres)):
-        dic[list(enumerate(plays))[i]] = genres[i] # 중복key가 들어갈 수 있도록 enumerate사용
-    for k, v in dic.items(): # dic의 value를 key로 받고 합을 구해 새로운 dictionary생성 (=sumdic)
+        dic[list(enumerate(plays))[i]] = genres[i] # 중복key가 들어갈 수 있도록 enumerate
+    for k, v in dic.items(): # dic의 value를 key로 받고 합을 구해 new dictionary생성 (=sumdic)
         if v in sumdic.keys():
             sumdic[v] += k[1]
         else:
@@ -20,7 +20,7 @@ def solution(genres, plays):
                     answer.append(plays[plays.index(j[0][1])+1:].index(j[0][1])+plays.index(j[0][1])+1)  #슬라이스를 통해 중복되는 다음 인덱스를 받을 수 있도록 함.   
                 else:
                     answer.append(plays.index(j[0][1])) 
-    # 테스트
+    # test
     print("dic: ",dic)
     print()
     print("sumdic: ",sumdic)
